@@ -4,12 +4,20 @@ var client = require('../db/db.js');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-  console.log("aaaaa")
-  const result = await client.search({
+  const bookQuery = req.query.title;
+  client.search({
     index: 'books',
-    q: 'North'
+    query: {
+      match: {
+        title: bookQuery
+      }
+    }
+  }).then(results => {
+    res.json(results);
+  }).catch(err => {
+    res.status(500);
+    res.json(err);
   });
-  res.json(result);
 });
 
 module.exports = router;
