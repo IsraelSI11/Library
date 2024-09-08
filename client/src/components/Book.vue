@@ -11,9 +11,6 @@ export default defineComponent({
         year: { type: Number, required: true }
     },
     methods: {
-        notify() {
-            alert('navigation was prevented.')
-        },
         inspect() {
             console.log('Inspecting book', this.id)
         }
@@ -23,7 +20,8 @@ export default defineComponent({
 
 <template>
     <div class="book">
-        <img :src="imageUrl" :alt="title" />
+        <img v-if="imageUrl" :src="imageUrl" :alt="title" />
+        <p v-else>Imagen no disponible</p>
         <h2>{{ title }}</h2>
         <p>Author: {{ author }}</p>
         <p>Year: {{ year }}</p>
@@ -34,15 +32,25 @@ export default defineComponent({
 </template>
 
 <style>
+
 .book {
     margin: 1em;
-    padding: 2em;
-    border: 1px solid #ccc;
-    border-radius: 1em;
+    flex: 1 1 calc(20% - 2em); /* Ajusta para ser responsivo y manejar el espacio del gap */
+    box-sizing: border-box;
     text-align: left;
+    padding: 1em;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 #button-container {
     text-align: center;
+    margin-top: 1em;
 }
 </style>

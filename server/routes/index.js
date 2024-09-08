@@ -5,14 +5,25 @@ var client = require('../db/db.js');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   const bookQuery = req.query.title;
-  client.search({
-    index: 'books',
-    query: {
-      match: {
-        title: bookQuery
+  let query = null;
+  if (bookQuery == "" || bookQuery == undefined || bookQuery == null) {
+    query = {
+      index: 'books',
+      query: {
+        match_all: {}
       }
     }
-  }).then(results => {
+  } else {
+    query = {
+      index: 'books',
+      query: {
+        match: {
+          title: bookQuery
+        }
+      }
+    }
+  }
+  client.search(query).then(results => {
     res.json(results);
   }).catch(err => {
     res.status(500);
