@@ -19,38 +19,62 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="book">
-        <img v-if="imageUrl" :src="imageUrl" :alt="title" />
-        <p v-else>Imagen no disponible</p>
-        <h2>{{ title }}</h2>
-        <p>Author: {{ author }}</p>
-        <p>Year: {{ year }}</p>
-        <div id="button-container">
-            <button @click="inspect">Visualizar</button>
+    <div class="books-container">
+        <div class="book">
+            <img v-if="imageUrl" :src="imageUrl" :alt="title" />
+            <p v-else>Imagen no disponible</p>
+            <h2>{{ title }}</h2>
+            <p class="author">Author: {{ author }}</p>
+            <p class="year">Year: {{ year }}</p>
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
+
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center; /* Alinea los libros en el centro */
+    padding: 2em;
+}
 
 .book {
-    margin: 1em;
-    flex: 1 1 calc(20% - 2em); /* Ajusta para ser responsivo y manejar el espacio del gap */
-    box-sizing: border-box;
-    text-align: left;
-    padding: 1em;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 1.5em;
+    width: 15em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    flex: 1 1 calc(20% - 2em); /* Responsivo para ajustarse a 5 columnas */
 }
 
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book img {
+    min-height: 15em;
     max-width: 100%;
     height: auto;
+    margin-bottom: 1em;
+    border-radius: 4px;
 }
 
-#button-container {
-    text-align: center;
-    margin-top: 1em;
+h2 {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #333;
 }
+
+.author, .year {
+    font-size: 0.9em;
+    color: #777;
+}
+
 </style>

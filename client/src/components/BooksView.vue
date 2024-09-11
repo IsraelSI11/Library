@@ -26,7 +26,6 @@ export default defineComponent({
             this.books = [];
             axios.get(`http://localhost:3000/?title=${title}`)
                 .then(response => {
-                    console.log(response)
                     for (const book of response.data.hits.hits) {
                         book.id = book['_id'];
                         book.title = book['_source'].title.replace('"','');
